@@ -215,7 +215,6 @@ export default {
   font-size: 18px;
   flex: 1;
   line-height: 1.6em;
-  opacity: 0;;
   padding: 20px 10px;
 }
 .modal .buttons {
