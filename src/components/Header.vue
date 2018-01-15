@@ -3,9 +3,9 @@
     <v-touch
       v-on:swipeleft="updateMonth(1)"
       v-on:swiperight="updateMonth(-1)">
-      <i class="prev material-icons" @click="updateMonth(-1)">keyboard_arrow_left</i>
+      <i class="icon-left prev" @click="updateMonth(-1)"></i>
       <h3 @click="goToCurrentMonth()">{{ formattedMonth }}</h3>
-      <i class="next material-icons" @click="updateMonth(1)">keyboard_arrow_right</i>
+      <i class="icon-right next" @click="updateMonth(1)"></i>
     </v-touch>
   </header>
 </template>

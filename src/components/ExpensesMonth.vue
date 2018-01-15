@@ -7,7 +7,10 @@
       v-on:updateMonth="updateMonth"
       v-on:deleteExpense="deleteExpense"
     ></ExpensesList>
-    <ExpenseForm v-on:addExpense="addExpense"></ExpenseForm>
+    <ExpenseForm 
+      v-on:addExpense="addExpense"
+      v-on:toggleModal="toggleModal"
+    ></ExpenseForm>
     <button @click="logout">Logout</button>
   </section>
 </template>
@@ -41,24 +44,20 @@ export default {
     },
     updateExpenses() {
       const currentUser = firebase.auth().currentUser;
-      const expensesRef = firebase.database().ref(`expenses/${currentUser.uid}`);
-      expensesRef
+      const expensesRef = firebase.database()
+        .ref(`expenses/${currentUser.uid}`)
         .orderByChild('date')
         .startAt(this.currentMonth.format('YYYY-MM-01'))
-        .endAt(this.currentMonth.endOf('month').format('YYYY-MM-DD'))
-        .on('child_added', (item) => {
-          const expense = item.val();
-          expense.id = item.key;
-          this.expenses.unshift(expense);
-        });
-      expensesRef
-        .orderByChild('date')
-        .startAt(this.currentMonth.format('YYYY-MM-01'))
-        .endAt(this.currentMonth.endOf('month').format('YYYY-MM-DD'))
-        .on('child_removed', (item) => {
-          const expenseIndex = this.expenses.findIndex(expense => expense.id === item.key);
-          this.expenses.splice(expenseIndex, 1);
-        });
+        .endAt(this.currentMonth.endOf('month').format('YYYY-MM-DD'));
+      expensesRef.on('child_added', (item) => {
+        const expense = item.val();
+        expense.id = item.key;
+        this.expenses.unshift(expense);
+      });
+      expensesRef.on('child_removed', (item) => {
+        const expenseIndex = this.expenses.findIndex(expense => expense.id === item.key);
+        this.expenses.splice(expenseIndex, 1);
+      });
     },
     addExpense(newExpense) {
       const currentUser = firebase.auth().currentUser;
@@ -73,6 +72,9 @@ export default {
       this.currentMonth = this.currentMonth.clone().add(diff, 'month').startOf('month');
       this.expenses = [];
       this.updateExpenses();
+    },
+    toggleModal() {
+      this.$emit('toggleModal');
     },
     logout() {
       firebase.auth().signOut().then(() => {
@@ -117,34 +119,38 @@ export default {
 
 <style scoped>
 section {
-    margin-top: 50px;
-  }
+  margin-top: 50px;
+}
+.show-modal {
+  background: red;
+  overflow: hidden;
+}
 
-  .summary {
-    align-content: center;
-    background-color: #e6eaef;
-    display: flex;
-    height: 240px;
-  }
-  .total {
-    align-self: center;
-    color: #EE4370;
-    font-size: 20px;
-    left: calc(50% - 60px);
-    position: absolute;
-    text-align: center;
-    width: 120px;
-  }
+.summary {
+  align-content: center;
+  background-color: #e6eaef;
+  display: flex;
+  height: 240px;
+}
+.total {
+  align-self: center;
+  color: #EE4370;
+  font-size: 20px;
+  left: calc(50% - 60px);
+  position: absolute;
+  text-align: center;
+  width: 120px;
+}
 
-  .chart {
-    background-color: #fff;
-    border-radius: 100%;
-    height: 200px;
-    margin: 20px auto;
-    width: 200px;
-  }
+.chart {
+  background-color: #fff;
+  border-radius: 100%;
+  height: 200px;
+  margin: 20px auto;
+  width: 200px;
+}
 
-  .list {
+.list {
   border: 1px solid #e6eaef;
   border-bottom: none;
   margin: 0;

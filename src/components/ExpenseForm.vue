@@ -1,12 +1,21 @@
 <template>
   <form v-on:submit.prevent="addExpense" id="add-expense" v-bind:class="addExpenseClass">
-    <header id="add-button">
-      <i class="material-icons" v-on:click="showAddExpenseForm">add</i>
-      <h3>Add Expense</h3>
-    </header>
+    <div class="action-button">
+      <i class="icon-plus" v-on:click="showAddExpenseForm"></i>
+    </div>
 
     <div class="row">
-      <div class="col s12">
+      <div class="input-field col s6">
+        <label for="expense-date" class="active">Date</label>
+        <input type="date" id="expense-date" class="datepicker" required="required" v-model="newExpense.date">
+      </div>
+      <div class="input-field col s6">
+        <label for="expense-amount">Amount</label>
+        <input type="number" id="expense-amount" class="" step=".01" placeholder="0.00" required v-model="newExpense.amount">
+      </div>
+    </div>
+    <div class="row">
+      <div class="col s6">
         <label class="active">Category</label>
         <ul class="categories">
           <li v-for="category in getCategories()" :key="category.id">
@@ -17,24 +26,12 @@
           </li>
         </ul>
       </div>
-    </div>
-    <div class="row">
       <div class="input-field col s6">
-        <label for="expense-date" class="active">Date</label>
-        <input type="date" id="expense-date" class="datepicker" required="required" v-model="newExpense.date">
-      </div>
-      <div class="input-field col s6">
-        <label for="expense-amount">Amount</label>
-        <input type="number" id="expense-amount" class="" step=".01" required v-model="newExpense.amount">
-      </div>
-    </div>
-    <div class="row">
-      <div class="input-field col s12">
         <label for="expense-description">Description</label>
         <input type="text" id="expense-description" v-model="newExpense.description">
       </div>
     </div>
-    <div class="row">
+    <div class="row" style="display: none">
       <div class="vat switch col s6">
         <label>
           <input type="checkbox" name="vat" v-model="newExpense.vat">
@@ -43,8 +40,10 @@
         </label>
       </div>
       <div class="input-field col s6">
-        <button type="submit" class="btn btn-primary">Add Expense</button>
       </div>
+    </div>
+    <div class="row">
+        <button type="submit" class="btn btn-primary">Add Expense</button>
     </div>
   </form>
 </template>
@@ -70,6 +69,7 @@ export default {
   },
   methods: {
     showAddExpenseForm() {
+      this.$emit('toggleModal');
       this.addExpenseClass = this.addExpenseClass === 'show' ? '' : 'show';
     },
     addExpense() {
@@ -90,51 +90,44 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 form {
-  background-color: #fff;
-  border-radius: 60px;
-  bottom: 15px;
-  box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 1px 5px 0 rgba(0,0,0,0.12), 0 3px 1px -2px rgba(0,0,0,0.2);
+  bottom: -258px;
   font-size: 28px;
-  height: 60px;
-  line-height: 60px;
+  height: 338px;
+  left: 0;
   overflow: hidden;
   position: fixed;
-  right: 15px;
   text-align: center;
   transition: .3s;
   user-select: none;
-  width: 60px;
-  z-index: 20;
+  width: 100%;
+  z-index: 30;
   -webkit-tap-highlight-color: transparent;
 }
 
-header {
+.action-button {
   background-color: #00193D;
+  border-radius: 60px;
+  box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 1px 5px 0 rgba(0,0,0,0.12), 0 3px 1px -2px rgba(0,0,0,0.2);
   color: #fff;
-}
-
-header i {
   cursor: pointer;
+  float: right;
   line-height: 60px;
+  margin: 5px 15px 15px 0;
+  text-align: center;
+  transition: .3s;
   width: 60px;
 }
 
-header h3 {
-  font-size: 24px;
-  line-height: 50px;
-  margin: 0 50px;
-  user-select: none;
-  opacity: 0;
-  transition: .3s;
-}
-
-#add-expense.show header h3 {
-  opacity: 1;
+.action-button i {
+  line-height: inherit;
+  margin: 0;
+  width: 100%;
 }
 
 .row {
   background-color: #fff;
   color: #00193D;
+  clear: both;
   line-height: initial;
   margin: 0;
   overflow-y: auto;
@@ -153,6 +146,7 @@ header h3 {
   display: inline-block;
 }
 .categories input {
+  margin: 0;
   opacity: 0;
   position: absolute;
   pointer-events: none;
@@ -161,11 +155,11 @@ header h3 {
   background-color: #9e9e9e;
   border-radius: 100%;
   color: #fff;
-  font-size: 22px;
-  line-height: 50px;
+  font-size: 20px;
+  line-height: 45px;
   margin: 0 10px 10px 0;
   transition: .3s;
-  width: 50px;
+  width: 45px;
 }
 .categories input:checked + i {
   background-color: #00193D;
@@ -193,18 +187,22 @@ header h3 {
 #add-expense.show {
   border-radius: 0;
   bottom: 0;
-  height: 100%;
   right: 0;
   width: 100%;
 }
-#add-expense.show form {
-  min-height: 600px;
+#add-expense.show .action-button {
+  line-height: 40px;
+  opacity: .9;
+  transform: rotate(135deg);
+  width: 40px;
 }
-#add-expense.show header i {
-  float: right;
-  font-size: 30px;
+
+button[type="submit"] {
+  background-color: #00193D;
+  color: #fff;
+  font-size: 22px;
   line-height: 50px;
-  transform: rotate(45deg);
-  width: 50px;
+  text-align: center;
+  width: 100%;
 }
 </style>

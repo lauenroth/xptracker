@@ -1,12 +1,22 @@
 <template>
-  <div id="app">
-    <router-view/>
+  <div id="app" v-bind:class="{ 'show-modal': showModal }">
+    <router-view v-on:toggleModal="toggleModal" />
   </div>
 </template>
 
 <script>
 export default {
   name: 'app',
+  data() {
+    return {
+      showModal: false,
+    };
+  },
+  methods: {
+    toggleModal() {
+      this.showModal = !this.showModal;
+    },
+  },
 };
 </script>
 
@@ -15,14 +25,42 @@ body {
   margin: 0;
 }
 #app {
+  bottom: 0;
   box-shadow: 0 0 10px #00193D;
   color: #2c3e50;
+  left: 0;
   font-family: 'Lato', Helvetica, Arial, sans-serif;
-  margin: 0 auto;
-  max-width: 600px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  position: absolute;
+  right: 0;
   text-align: center;
+  top: 0;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+#app.show-modal {
+  overflow: hidden;
+}
+#app.show-modal::before {
+  background-color: rgba(0, 25, 61, 0);
+  bottom: 0;
+  content: "";
+  height: 100%;
+  left: 0;
+  position: absolute;
+  transition: .3s;
+  visibility: hidden;
+  width: 100%;
+  z-index: 25;
+}
+#app.show-modal::before {
+  background-color: rgba(0, 25, 61, .5);
+  visibility: visible;
+}
+#app > * {
+  margin: 0 auto;
+  max-width: 600px;
 }
 @font-face {
   font-family: 'fontello';
