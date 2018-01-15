@@ -5,6 +5,7 @@ import firebase from 'firebase';
 import Login from '@/components/Login';
 import SignUp from '@/components/SignUp';
 import ExpensesMonth from '@/components/ExpensesMonth';
+import Settings from '@/components/Settings';
 
 Vue.use(Router);
 
@@ -32,6 +33,14 @@ const router = new Router({
       path: '/expenses',
       name: 'ExpensesMonth',
       component: ExpensesMonth,
+      meta: {
+        requiresAuth: true,
+      },
+    },
+    {
+      path: '/settings',
+      name: 'Settings',
+      component: Settings,
       meta: {
         requiresAuth: true,
       },
