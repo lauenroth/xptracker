@@ -44,11 +44,10 @@ export default {
  input {
    margin: 10px 0;
    padding: 15px;
-   width: 20%;
+   width: 80%;
  }
  button {
    cursor: pointer;
    margin-top: 20px;
-   width: 10%; 
  }
 </style>
