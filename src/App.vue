@@ -121,6 +121,17 @@ input[type="date"]::-webkit-clear-button {
   display: none;
 }
 
+button,
+.btn {
+  background-color: #00193D;
+  border: none;
+  color: #fff;
+  font-size: 22px;
+  line-height: 50px;
+  text-align: center;
+  width: 100%;
+}
+
 .row {
   background-color: #fff;
   color: #00193D;
@@ -147,5 +158,42 @@ input[type="date"]::-webkit-clear-button {
   margin-left: auto;
   right: auto;
   width: 100%;
+}
+
+header.main {
+  background-color: #00193D;
+  color: #fff;
+  height: 50px;
+  left: 0;
+  line-height: 50px;
+  position: fixed;
+  text-align: center;
+  top: 0;
+  width: 100%;
+  z-index: 20;
+}
+header.main a {
+  color: #fff;
+  text-decoration: none;
+}
+header.main .left,
+header.main .right {
+  font-size: 24px;
+  left: 0;
+  line-height: 50px;
+  position: absolute;
+  top: 0;
+  user-select: none;
+  width: 50px;
+}
+header.main .right {
+  left: auto;
+  right: 0;
+}
+header.main h3 {
+  font-size: 24px;
+  line-height: 50px;
+  margin: 0 50px;
+  user-select: none;
 }
 </style>

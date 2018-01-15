@@ -1,11 +1,11 @@
 <template>
-  <header>
+  <header class="main">
     <v-touch
       v-on:swipeleft="updateMonth(1)"
       v-on:swiperight="updateMonth(-1)">
-      <i class="icon-left prev" @click="updateMonth(-1)"></i>
+      <i class="icon-search left"></i>
       <h3 @click="goToCurrentMonth()">{{ formattedMonth }}</h3>
-      <i class="icon-right next" @click="updateMonth(1)"></i>
+      <router-link to="Settings"><i class="icon-settings right"></i></router-link>
     </v-touch>
   </header>
 </template>
@@ -35,37 +35,6 @@ export default {
 };
 </script>
 
-<style scoped>
-header {
-  background-color: #00193D;
-  color: #fff;
-  height: 50px;
-  left: 0;
-  line-height: 50px;
-  position: fixed;
-  text-align: center;
-  top: 0;
-  width: 100%;
-  z-index: 20;
-}
-.prev,
-.next {
-  font-size: 35px;
-  left: 0;
-  line-height: 50px;
-  position: absolute;
-  top: 0;
-  user-select: none;
-  width: 50px;
-}
-.next {
-  left: auto;
-  right: 0;
-}
-h3 {
-  font-size: 24px;
-  line-height: 50px;
-  margin: 0 50px;
-  user-select: none;
-}
+<style>
+
 </style>
