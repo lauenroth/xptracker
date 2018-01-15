@@ -7,13 +7,22 @@
 
     <div>Version: 1.0.0</div>
 
-    <div class="btn">Logout</div>
+    <div class="btn" @click="logout">Logout</div>
   </section>
 </template>
 
 <script>
+import firebase from 'firebase';
+
 export default {
   name: 'Settings',
+  methods: {
+    logout() {
+      firebase.auth().signOut().then(() => {
+        this.$router.replace('login');
+      });
+    },
+  },
 };
 </script>
 

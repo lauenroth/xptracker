@@ -11,7 +11,6 @@
       v-on:addExpense="addExpense"
       v-on:toggleModal="toggleModal"
     ></ExpenseForm>
-    <button @click="logout">Logout</button>
   </section>
 </template>
 
@@ -75,11 +74,6 @@ export default {
     },
     toggleModal() {
       this.$emit('toggleModal');
-    },
-    logout() {
-      firebase.auth().signOut().then(() => {
-        this.$router.replace('login');
-      });
     },
     getIcon(category) {
       switch (category) {
