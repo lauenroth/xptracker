@@ -2,12 +2,14 @@
   <section class="expenses-list">
     <div class="summary">
       <div class="total">{{ total }}</div>
+      <i class="icon-left" @click="updateMonth(-1)"></i>
       <ExpensesChart class="chart" v-bind:chart-data="chartData" :options="chartOptions"></ExpensesChart>
+      <i class="icon-right" @click="updateMonth(1)"></i>
     </div>
-    <v-touch class="swipe-month"
+    <!-- <v-touch class="swipe-month"
       v-on:swipeleft="updateMonth(1)"
       v-on:swiperight="updateMonth(-1)">
-    </v-touch>
+    </v-touch> -->
     <ul class="list" v-if="expenses.length">
       <ExpenseListItem v-for="item in expenses" :key="item.id" :expense="item"
         :showOptions="showOptions"
@@ -27,7 +29,6 @@
 </template>
 
 <script>
-// import firebase from 'firebase';
 import ExpensesChart from './ExpensesChart';
 import CategoriesMixin from '../mixins/categories';
 import ExpenseListItem from './ListItem';
@@ -144,8 +145,11 @@ export default {
   display: flex;
   height: 240px;
   max-width: 600px;
-  position: fixed;
   width: 100%;
+}
+.summary i {
+  font-size: 34px;
+  line-height: 240px;
 }
 .total {
   align-self: center;
@@ -178,13 +182,13 @@ export default {
   padding: 0 0 0;
   position: relative;
 }
-.list::after {
+/* .list::after {
   background: -webkit-linear-gradient(top, #ffffff 0%,#f6f6f6 100%);
   background: linear-gradient(to bottom, #ffffff 0%,#f6f6f6 100%);
   content: '';
   display: block;
   height: 90px;
-}
+} */
 .no-data {
   color: #aaa;
   font-size: 28px;
