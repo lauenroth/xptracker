@@ -43,7 +43,7 @@
       </div>
     </div>
     <div class="row">
-        <button type="submit" class="btn btn-primary">Add Expense</button>
+      <button type="submit" class="btn btn-primary">Add Expense</button>
     </div>
   </form>
 </template>
@@ -195,14 +195,5 @@ form {
   opacity: .9;
   transform: rotate(135deg);
   width: 40px;
-}
-
-button[type="submit"] {
-  background-color: #00193D;
-  color: #fff;
-  font-size: 22px;
-  line-height: 50px;
-  text-align: center;
-  width: 100%;
 }
 </style>
