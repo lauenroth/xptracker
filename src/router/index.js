@@ -6,6 +6,7 @@ import Login from '@/components/Login';
 import SignUp from '@/components/SignUp';
 import ExpensesMonth from '@/components/ExpensesMonth';
 import Settings from '@/components/Settings';
+import Statistics from '@/components/Statistics';
 
 Vue.use(Router);
 
@@ -41,6 +42,14 @@ const router = new Router({
       path: '/settings',
       name: 'Settings',
       component: Settings,
+      meta: {
+        requiresAuth: true,
+      },
+    },
+    {
+      path: '/statistics',
+      name: 'Statistics',
+      component: Statistics,
       meta: {
         requiresAuth: true,
       },

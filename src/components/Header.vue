@@ -3,7 +3,7 @@
     <v-touch
       v-on:swipeleft="updateMonth(1)"
       v-on:swiperight="updateMonth(-1)">
-      <i class="icon-search left"></i>
+      <!-- <router-link to="Statistics"><i class="icon-statistics left"></i></router-link> -->
       <h3 @click="goToCurrentMonth()">{{ formattedMonth }}</h3>
       <router-link to="Settings"><i class="icon-settings right"></i></router-link>
     </v-touch>
