@@ -22,6 +22,7 @@ export default {
 
 <style>
 body {
+  height: 100%;
   margin: 0;
 }
 #app {
@@ -61,6 +62,7 @@ body {
 #app > * {
   margin: 0 auto;
   max-width: 600px;
+  min-height: 100%;
 }
 @font-face {
   font-family: 'fontello';

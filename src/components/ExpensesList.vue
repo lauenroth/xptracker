@@ -135,8 +135,9 @@ export default {
 
 <style scoped>
 .expenses-list {
-  margin-top: 50px;
-  min-height: calc(100vh - 50px);
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100% - 50px);
 }
 
 .summary {
@@ -144,6 +145,7 @@ export default {
   background-color: #e6eaef;
   display: flex;
   height: 240px;
+  margin-top: 50px;
   max-width: 600px;
   width: 100%;
 }
@@ -192,7 +194,7 @@ export default {
 .no-data {
   color: #aaa;
   font-size: 28px;
-  padding-top: 100px;
+  margin: auto;
   text-align: center;
 }
 

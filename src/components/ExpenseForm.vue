@@ -74,6 +74,7 @@ export default {
     },
     addExpense() {
       this.newExpense.category = document.querySelector('input[name="category"]:checked').value;
+      this.$emit('toggleModal');
       this.$emit('addExpense', this.newExpense);
       this.newExpense.amount = '';
       this.newExpense.description = '';
@@ -92,7 +93,7 @@ export default {
 form {
   bottom: -258px;
   font-size: 28px;
-  height: 338px;
+  height: 336px;
   left: 0;
   overflow: hidden;
   position: fixed;
