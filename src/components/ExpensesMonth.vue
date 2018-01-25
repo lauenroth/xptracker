@@ -11,6 +11,7 @@
       v-on:addExpense="addExpense"
       v-on:toggleModal="toggleModal"
     ></ExpenseForm>
+    <i class="icon-plus" @click="toggleModal"></i>
   </section>
 </template>
 
@@ -112,9 +113,6 @@ export default {
 </script>
 
 <style scoped>
-section {
-  margin-top: 50px;
-}
 .show-modal {
   background: red;
   overflow: hidden;
@@ -125,6 +123,7 @@ section {
   background-color: #e6eaef;
   display: flex;
   height: 240px;
+  margin-top: 50px;
 }
 .total {
   align-self: center;
@@ -188,10 +187,10 @@ section {
   font-size: 12px;
   margin-left: 40px;
 }
-.no-data {
-  color: #aaa;
-  font-size: 28px;
-  margin-top: 150px;
-  text-align: center;
+
+.icon-plus {
+  bottom: 15px;
+  position: fixed;
+  right: 15px;
 }
 </style>
