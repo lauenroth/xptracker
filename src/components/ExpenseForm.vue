@@ -80,6 +80,7 @@ export default {
       this.newExpense.description = '';
       this.newExpense.category = 'shopping';
       this.addExpenseClass = '';
+      document.activeElement.blur();
     },
     iconClass(category) {
       return `icon-${category}`;
