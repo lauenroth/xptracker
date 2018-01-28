@@ -1,9 +1,5 @@
 <template>
-  <form v-on:submit.prevent="addExpense" v-bind:class="formClass">
-    <div class="action-button">
-      <i class="icon-plus" v-on:click="showAddExpenseForm"></i>
-    </div>
-
+  <form v-on:submit.prevent="addExpense" v-bind:class="{ show: showExpenseForm }">
     <div class="row">
       <div class="input-field col s6">
         <label for="expense-date" class="active">Date</label>
@@ -56,7 +52,7 @@ import CategoriesMixin from '../mixins/categories';
 export default {
   name: 'ExpenseForm',
   mixins: [CategoriesMixin],
-  props: ['currentExpense'],
+  props: ['currentExpense', 'showExpenseForm'],
   data() {
     return {
       expense: {
@@ -72,27 +68,24 @@ export default {
   methods: {
     showAddExpenseForm() {
       this.$emit('toggleModal');
-      this.formClass = this.formClass === 'show' ? '' : 'show';
-      if (this.formClass === '') {
+      if (this.showExpenseForm) {
         this.resetForm();
       }
     },
     addExpense() {
       this.expense.category = document.querySelector('input[name="category"]:checked').value;
-      this.$emit('toggleModal');
       if (this.expense.id) {
         this.$emit('updateExpense', this.expense);
       } else {
         this.$emit('addExpense', this.expense);
       }
-      this.resetForm();
-      this.formClass = '';
       document.activeElement.blur();
     },
     iconClass(category) {
       return `icon-${category}`;
     },
     resetForm() {
+      this.expense.id = false;
       this.expense.amount = '';
       this.expense.description = '';
       this.expense.category = 'shopping';
@@ -111,7 +104,8 @@ export default {
         };
         const category = document.querySelector(`input[name="category"][value="${this.expense.category}"]`);
         category.checked = true;
-        this.showAddExpenseForm();
+      } else {
+        this.resetForm();
       }
     },
   },
@@ -121,9 +115,9 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 form {
-  bottom: -258px;
+  bottom: -300px;
   font-size: 28px;
-  height: 336px;
+  height: 275px;
   left: 0;
   overflow: hidden;
   position: fixed;
@@ -133,26 +127,6 @@ form {
   width: 100%;
   z-index: 30;
   -webkit-tap-highlight-color: transparent;
-}
-
-.action-button {
-  background-color: #00193D;
-  border-radius: 60px;
-  box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 1px 5px 0 rgba(0,0,0,0.12), 0 3px 1px -2px rgba(0,0,0,0.2);
-  color: #fff;
-  cursor: pointer;
-  float: right;
-  line-height: 60px;
-  margin: 5px 15px 15px 0;
-  text-align: center;
-  transition: .3s;
-  width: 60px;
-}
-
-.action-button i {
-  line-height: inherit;
-  margin: 0;
-  width: 100%;
 }
 
 .row {
@@ -207,11 +181,5 @@ form.show {
   bottom: 0;
   right: 0;
   width: 100%;
-}
-form.show .action-button {
-  line-height: 40px;
-  opacity: .9;
-  transform: rotate(135deg);
-  width: 40px;
 }
 </style>

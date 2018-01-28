@@ -8,13 +8,15 @@
       v-on:editItem="selectExpense"
       v-on:deleteExpense="deleteExpense"
     ></ExpensesList>
+    <div class="action-button" v-bind:class="{ clicked: showExpenseForm }">
+      <i class="icon-plus" v-on:click="addClose"></i>
+    </div>
     <ExpenseForm
       :currentExpense="currentExpense"
+      :showExpenseForm="showExpenseForm"
       v-on:addExpense="addExpense"
       v-on:updateExpense="updateExpense"
-      v-on:toggleModal="toggleModal"
     ></ExpenseForm>
-    <i class="icon-plus" @click="toggleModal"></i>
   </section>
 </template>
 
@@ -37,6 +39,7 @@ export default {
       expenses: [],
       currentExpense: null,
       currentMonth: moment().startOf('month'),
+      showExpenseForm: false,
     };
   },
   mounted() {
@@ -63,12 +66,22 @@ export default {
         this.expenses.splice(expenseIndex, 1);
       });
     },
+    addClose() {
+      this.showExpenseForm = !this.showExpenseForm;
+      if (this.showExpenseForm) {
+        this.currentExpense = null;
+      }
+      this.$emit('toggleModal');
+    },
     addExpense(newExpense) {
       const currentUser = firebase.auth().currentUser;
       firebase.database().ref(`expenses/${currentUser.uid}`).push(newExpense);
+      this.toggleModal();
     },
     selectExpense(expense) {
       this.currentExpense = expense;
+      this.showExpenseForm = true;
+      this.$emit('toggleModal');
     },
     updateExpense(expense) {
       const currentUser = firebase.auth().currentUser;
@@ -77,6 +90,7 @@ export default {
       firebase.database().ref().update(update);
       this.expenses = [];
       this.updateExpenses();
+      this.toggleModal();
     },
     deleteExpense(expense) {
       const currentUser = firebase.auth().currentUser;
@@ -89,7 +103,8 @@ export default {
       this.updateExpenses();
     },
     toggleModal() {
-      this.currentExpense = null;
+      this.currentExpense = false;
+      this.showExpenseForm = false;
       this.$emit('toggleModal');
     },
     getIcon(category) {
@@ -204,9 +219,34 @@ export default {
   margin-left: 40px;
 }
 
-.icon-plus {
+.action-button {
+  background-color: #00193D;
+  border-radius: 60px;
   bottom: 15px;
+  box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 1px 5px 0 rgba(0,0,0,0.12), 0 3px 1px -2px rgba(0,0,0,0.2);
+  color: #fff;
+  cursor: pointer;
+  font-size: 26px;
+  line-height: 60px;
   position: fixed;
   right: 15px;
+  text-align: center;
+  transition: .3s;
+  width: 60px;
+  z-index: 30;
+}
+
+.action-button.clicked {
+  bottom: 290px;
+  line-height: 40px;
+  opacity: .9;
+  transform: rotate(135deg);
+  width: 40px;
+}
+
+.action-button i {
+  line-height: inherit;
+  margin: 0;
+  width: 100%;
 }
 </style>

@@ -185,16 +185,16 @@ export default {
   border: 1px solid #e6eaef;
   border-bottom: none;
   margin: 0;
-  padding: 0 0 0;
+  padding: 0;
   position: relative;
 }
-/* .list::after {
+.list::after {
   background: -webkit-linear-gradient(top, #ffffff 0%,#f6f6f6 100%);
   background: linear-gradient(to bottom, #ffffff 0%,#f6f6f6 100%);
   content: '';
   display: block;
   height: 90px;
-} */
+}
 .no-data {
   color: #aaa;
   font-size: 28px;
