@@ -14,6 +14,7 @@
       <ExpenseListItem v-for="item in expenses" :key="item.id" :expense="item"
         :showOptions="showOptions"
         v-on:toggleOption="toggleOption"
+        v-on:editItem="editItem"
         v-on:deleteItem="deleteItem"></ExpenseListItem>
     </ul>
     <p v-else class="no-data">no data yet</p>
@@ -97,6 +98,9 @@ export default {
     toggleOption(id) {
       this.showOptions = id;
     },
+    editItem(item) {
+      this.$emit('editItem', item);
+    },
     deleteItem(item) {
       this.showDeleteModal = true;
       this.currentItem = item;
@@ -137,7 +141,7 @@ export default {
 .expenses-list {
   display: flex;
   flex-direction: column;
-  min-height: calc(100% - 50px);
+  min-height: 100vh;
 }
 
 .summary {

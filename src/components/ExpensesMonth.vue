@@ -5,10 +5,13 @@
       :currentMonth="currentMonth" 
       :expenses="expenses" 
       v-on:updateMonth="updateMonth"
+      v-on:editItem="selectExpense"
       v-on:deleteExpense="deleteExpense"
     ></ExpensesList>
-    <ExpenseForm 
+    <ExpenseForm
+      :currentExpense="currentExpense"
       v-on:addExpense="addExpense"
+      v-on:updateExpense="updateExpense"
       v-on:toggleModal="toggleModal"
     ></ExpenseForm>
     <i class="icon-plus" @click="toggleModal"></i>
@@ -32,6 +35,7 @@ export default {
   data() {
     return {
       expenses: [],
+      currentExpense: null,
       currentMonth: moment().startOf('month'),
     };
   },
@@ -63,6 +67,17 @@ export default {
       const currentUser = firebase.auth().currentUser;
       firebase.database().ref(`expenses/${currentUser.uid}`).push(newExpense);
     },
+    selectExpense(expense) {
+      this.currentExpense = expense;
+    },
+    updateExpense(expense) {
+      const currentUser = firebase.auth().currentUser;
+      const update = {};
+      update[`expenses/${currentUser.uid}/${expense.id}`] = expense;
+      firebase.database().ref().update(update);
+      this.expenses = [];
+      this.updateExpenses();
+    },
     deleteExpense(expense) {
       const currentUser = firebase.auth().currentUser;
       firebase.database().ref(`expenses/${currentUser.uid}`)
@@ -74,6 +89,7 @@ export default {
       this.updateExpenses();
     },
     toggleModal() {
+      this.currentExpense = null;
       this.$emit('toggleModal');
     },
     getIcon(category) {

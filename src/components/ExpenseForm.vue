@@ -1,5 +1,5 @@
 <template>
-  <form v-on:submit.prevent="addExpense" id="add-expense" v-bind:class="addExpenseClass">
+  <form v-on:submit.prevent="addExpense" v-bind:class="formClass">
     <div class="action-button">
       <i class="icon-plus" v-on:click="showAddExpenseForm"></i>
     </div>
@@ -7,11 +7,11 @@
     <div class="row">
       <div class="input-field col s6">
         <label for="expense-date" class="active">Date</label>
-        <input type="date" id="expense-date" class="datepicker" required="required" v-model="newExpense.date">
+        <input type="date" id="expense-date" class="datepicker" required="required" v-model="expense.date">
       </div>
       <div class="input-field col s6">
         <label for="expense-amount">Amount</label>
-        <input type="number" id="expense-amount" class="" step=".01" placeholder="0.00" required v-model="newExpense.amount">
+        <input type="number" id="expense-amount" class="" step=".01" placeholder="0.00" required v-model="expense.amount">
       </div>
     </div>
     <div class="row">
@@ -28,13 +28,13 @@
       </div>
       <div class="input-field col s6">
         <label for="expense-description">Description</label>
-        <input type="text" id="expense-description" v-model="newExpense.description">
+        <input type="text" id="expense-description" v-model="expense.description">
       </div>
     </div>
     <div class="row" style="display: none">
       <div class="vat switch col s6">
         <label>
-          <input type="checkbox" name="vat" v-model="newExpense.vat">
+          <input type="checkbox" name="vat" v-model="expense.vat">
           <span class="lever"></span>
           VAT
         </label>
@@ -43,7 +43,8 @@
       </div>
     </div>
     <div class="row">
-      <button type="submit" class="btn btn-primary">Add Expense</button>
+      <button type="submit" class="btn btn-primary" v-if="expense.id">Update Expense</button>
+      <button type="submit" class="btn btn-primary" v-else>Add Expense</button>
     </div>
   </form>
 </template>
@@ -55,35 +56,63 @@ import CategoriesMixin from '../mixins/categories';
 export default {
   name: 'ExpenseForm',
   mixins: [CategoriesMixin],
+  props: ['currentExpense'],
   data() {
     return {
-      newExpense: {
+      expense: {
         amount: '',
         category: 'shopping',
         description: '',
         date: moment().format('YYYY-MM-DD'),
         vat: true,
       },
-      addExpenseClass: '',
+      formClass: '',
     };
   },
   methods: {
     showAddExpenseForm() {
       this.$emit('toggleModal');
-      this.addExpenseClass = this.addExpenseClass === 'show' ? '' : 'show';
+      this.formClass = this.formClass === 'show' ? '' : 'show';
+      if (this.formClass === '') {
+        this.resetForm();
+      }
     },
     addExpense() {
-      this.newExpense.category = document.querySelector('input[name="category"]:checked').value;
+      this.expense.category = document.querySelector('input[name="category"]:checked').value;
       this.$emit('toggleModal');
-      this.$emit('addExpense', this.newExpense);
-      this.newExpense.amount = '';
-      this.newExpense.description = '';
-      this.newExpense.category = 'shopping';
-      this.addExpenseClass = '';
+      if (this.expense.id) {
+        this.$emit('updateExpense', this.expense);
+      } else {
+        this.$emit('addExpense', this.expense);
+      }
+      this.resetForm();
+      this.formClass = '';
       document.activeElement.blur();
     },
     iconClass(category) {
       return `icon-${category}`;
+    },
+    resetForm() {
+      this.expense.amount = '';
+      this.expense.description = '';
+      this.expense.category = 'shopping';
+      this.expense.date = moment().format('YYYY-MM-DD');
+    },
+  },
+  watch: {
+    currentExpense() {
+      if (this.currentExpense) {
+        this.expense = {
+          id: this.currentExpense.id,
+          amount: this.currentExpense.amount,
+          category: this.currentExpense.category,
+          description: this.currentExpense.description,
+          date: this.currentExpense.date,
+        };
+        const category = document.querySelector(`input[name="category"][value="${this.expense.category}"]`);
+        category.checked = true;
+        this.showAddExpenseForm();
+      }
     },
   },
 };
@@ -173,26 +202,13 @@ form {
 #expense-amount {
   text-align: right;
 }
-#add-expense form {
-  background-color: #fff;
-  height: 100%;
-  left: 0;
-  margin: 0;
-  opacity: 0;
-  padding: 20px 0;
-  position: absolute;
-  right: 0;
-  top: 100%;
-  transition: .3s;
-  z-index: 50;
-}
-#add-expense.show {
+form.show {
   border-radius: 0;
   bottom: 0;
   right: 0;
   width: 100%;
 }
-#add-expense.show .action-button {
+form.show .action-button {
   line-height: 40px;
   opacity: .9;
   transform: rotate(135deg);
