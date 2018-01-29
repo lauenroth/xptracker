@@ -155,6 +155,8 @@ form {
   background-color: rgba(255, 255, 255, 0.95);
   bottom: 0;
   color: #00193D;
+  display: flex;
+  flex-direction: column;
   left: 0;
   margin: 0;
   padding: 20px;
@@ -173,7 +175,7 @@ form {
   margin: 20px 0 40px;
 }
 .categories {
-  margin: 0;
+  margin: auto 0;
   padding: 0;
 }
 .categories li {

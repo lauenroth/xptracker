@@ -112,11 +112,6 @@ export default {
 </script>
 
 <style scoped>
-.show-modal {
-  background: red;
-  overflow: hidden;
-}
-
 .summary {
   align-content: center;
   background-color: #e6eaef;

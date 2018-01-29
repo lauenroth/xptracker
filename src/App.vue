@@ -49,7 +49,7 @@ body {
   content: "";
   height: 100%;
   left: 0;
-  position: absolute;
+  position: fixed;
   transition: .3s;
   visibility: hidden;
   width: 100%;
