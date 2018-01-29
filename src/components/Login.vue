@@ -4,8 +4,12 @@
       <h3>Sign in</h3>
     </header>
     <div class="content">
-      <input type="email" placeholder="Email" v-model="email" required autocomplete="email"><br>
-      <input type="password" placeholder="Password" v-model="password" required autocomplete="current-password"><br>
+      <label for="email">E-mail</label>
+      <input type="email" id="email" v-model="email" required autocomplete="email">
+
+      <label for="password">Password</label>
+      <input type="password" id="password" v-model="password" required autocomplete="current-password">
+
       <p>You don't have an account yet?<br><router-link to="/sign-up">Create a new one</router-link></p>
       <button type="submit">Sign in</button>
     </div>
@@ -46,16 +50,24 @@ export default {
 </script>
 
 <style scoped>
+form {
+  min-height: initial;
+}
  .content {
    display: flex;
    flex-direction: column;
    margin-top: 50px;
    min-height: calc(100vh - 50px);
  }
+ label {
+   margin: 0 20px;
+   text-align: left;
+ }
+ label:first-child {
+   margin-top: 20px;
+ }
  input {
-   margin: 10px auto;
-   padding: 15px;
-   width: 80%;
+   padding: 10px 20px;
  }
  p {
    line-height: 2em;
