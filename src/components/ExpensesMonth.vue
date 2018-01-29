@@ -107,38 +107,6 @@ export default {
       this.showExpenseForm = false;
       this.$emit('toggleModal');
     },
-    getIcon(category) {
-      switch (category) {
-        case 'Eat/Drink':
-          return 'restaurant';
-        case 'Business':
-          return 'business';
-        case 'Home':
-          return 'home';
-        case 'Bus/Train':
-          return 'train';
-        case 'Car':
-          return 'directions_car';
-        case 'Taxi':
-          return 'directions_taxi';
-        case 'Gas Station':
-          return 'local_gas_station';
-        case 'Going out':
-          return 'local_bar';
-        case 'Hotel':
-          return 'local_hotel';
-        case 'Education':
-          return 'school';
-        case 'Holiday':
-          return 'beach_access';
-        case 'Health':
-          return 'favorite';
-        case 'Children':
-          return 'child_care';
-        default:
-          return 'shopping_cart';
-      }
-    },
   },
 };
 </script>
@@ -237,7 +205,7 @@ export default {
 }
 
 .action-button.clicked {
-  bottom: 290px;
+  bottom: 275px;
   line-height: 40px;
   opacity: .9;
   transform: rotate(135deg);

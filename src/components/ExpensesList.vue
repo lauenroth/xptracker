@@ -189,8 +189,8 @@ export default {
   position: relative;
 }
 .list::after {
-  background: -webkit-linear-gradient(top, #ffffff 0%,#f6f6f6 100%);
-  background: linear-gradient(to bottom, #ffffff 0%,#f6f6f6 100%);
+  background: -webkit-linear-gradient(top, #f6f6f6 0%,#ffffff 100%);
+  background: linear-gradient(to bottom, #f6f6f6 0%,#ffffff 100%);
   content: '';
   display: block;
   height: 90px;

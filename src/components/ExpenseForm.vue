@@ -13,14 +13,9 @@
     <div class="row">
       <div class="col s6">
         <label class="active">Category</label>
-        <ul class="categories">
-          <li v-for="category in getCategories()" :key="category.id">
-            <label>
-              <input type="radio" name="category" :value="category.name">
-              <i :class="iconClass(category.icon)"></i>
-            </label>
-          </li>
-        </ul>
+        <div class="category" @click="toggleCategorySelector()">
+          <i :class="iconClass(getIcon(expense.category))"></i>
+        </div>
       </div>
       <div class="input-field col s6">
         <label for="expense-description">Description</label>
@@ -42,6 +37,18 @@
       <button type="submit" class="btn btn-primary" v-if="expense.id">Update Expense</button>
       <button type="submit" class="btn btn-primary" v-else>Add Expense</button>
     </div>
+
+    <section class="category-picker" v-bind:class="{ show: showCategories }">
+      <h3>Please choose a category:</h3>
+      <ul class="categories">
+        <li v-for="category in getCategories()" :key="category.id">
+          <label>
+            <input type="radio" name="category" :value="category.name">
+            <i :class="iconClass(category.icon)" @click="toggleCategorySelector(category.name)"></i>
+          </label>
+        </li>
+      </ul>
+    </section>
   </form>
 </template>
 
@@ -57,12 +64,12 @@ export default {
     return {
       expense: {
         amount: '',
-        category: 'shopping',
+        category: 'Shopping',
         description: '',
         date: moment().format('YYYY-MM-DD'),
         vat: true,
       },
-      formClass: '',
+      showCategories: false,
     };
   },
   methods: {
@@ -72,8 +79,13 @@ export default {
         this.resetForm();
       }
     },
+    toggleCategorySelector(category) {
+      this.showCategories = !this.showCategories;
+      if (category) {
+        this.expense.category = category;
+      }
+    },
     addExpense() {
-      this.expense.category = document.querySelector('input[name="category"]:checked').value;
       if (this.expense.id) {
         this.$emit('updateExpense', this.expense);
       } else {
@@ -88,7 +100,7 @@ export default {
       this.expense.id = false;
       this.expense.amount = '';
       this.expense.description = '';
-      this.expense.category = 'shopping';
+      this.expense.category = 'Shopping';
       this.expense.date = moment().format('YYYY-MM-DD');
     },
   },
@@ -117,7 +129,7 @@ export default {
 form {
   bottom: -300px;
   font-size: 28px;
-  height: 275px;
+  height: 259px;
   left: 0;
   overflow: hidden;
   position: fixed;
@@ -139,13 +151,30 @@ form {
   text-align: left;
 }
 
+.category-picker {
+  background-color: rgba(255, 255, 255, 0.95);
+  bottom: 0;
+  color: #00193D;
+  left: 0;
+  margin: 0;
+  padding: 20px;
+  position: fixed;
+  right: 0;
+  top: 100%;
+  transition: .3s top;
+  visibility: hidden;
+}
+.category-picker.show {
+  top: 0;
+  visibility: visible;
+}
+.category-picker h3 {
+  font-size: 22px;
+  margin: 20px 0 40px;
+}
 .categories {
-  margin: 10px 0 20px;
+  margin: 0;
   padding: 0;
-  overflow-x: auto;
-  position: relative;
-  white-space: nowrap;
-  width: 100%;
 }
 .categories li {
   display: inline-block;
@@ -156,18 +185,24 @@ form {
   position: absolute;
   pointer-events: none;
 }
+.category i,
 .categories i {
   background-color: #9e9e9e;
   border-radius: 100%;
   color: #fff;
   font-size: 20px;
   line-height: 45px;
-  margin: 0 10px 10px 0;
+  margin: 0 15px 15px 0;
   transition: .3s;
   width: 45px;
 }
-.categories input:checked + i {
+.categories input:checked + i,
+.category i {
   background-color: #00193D;
+}
+
+.category i {
+  margin: 5px 0;
 }
 .vat label {
   display: block;
