@@ -5,9 +5,13 @@
       <h3>Settings</h3>
     </header>
 
-    <div>Version: 1.0.0</div>
+    <div class="content">
 
-    <div class="btn" @click="logout">Logout</div>
+      <footer>
+        <p class="version">Version: 1.0.0</p>
+        <div class="btn" @click="logout">Logout</div>
+      </footer>
+    </div>
   </section>
 </template>
 
@@ -41,7 +45,18 @@ export default {
     margin: 0;
   }
 
-  .btn {
+  .content {
+    display: flex;
+    flex-direction: column;
+    min-height: calc(100vh - 50px);
+  }
+
+  .version {
+    font-size: .8em;
+    text-align: center;
+  }
+
+  footer {
     margin-top: auto;
   }
 </style>
