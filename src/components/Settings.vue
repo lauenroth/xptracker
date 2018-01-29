@@ -7,6 +7,12 @@
 
     <div class="content">
 
+      <label for="name">Name</label>
+      <input id="name" type="text" v-model="name">
+
+      <label for="email">E-mail</label>
+      <input id="email" type="email" v-model="email">
+
       <footer>
         <p class="version">Version: 1.0.0</p>
         <div class="btn" @click="logout">Logout</div>
@@ -20,12 +26,26 @@ import firebase from 'firebase';
 
 export default {
   name: 'Settings',
+  data() {
+    return {
+      email: '',
+      name: '',
+    };
+  },
   methods: {
     logout() {
       firebase.auth().signOut().then(() => {
         this.$router.replace('login');
       });
     },
+  },
+  mounted() {
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        this.email = user.email;
+        this.name = user.displayName;
+      }
+    });
   },
 };
 </script>
@@ -49,6 +69,18 @@ export default {
     display: flex;
     flex-direction: column;
     min-height: calc(100vh - 50px);
+  }
+
+  label {
+    padding: 0 10px;
+  }
+
+  label:first-child {
+    margin-top: 20px;
+  }
+
+  input {
+    padding: 0 20px;
   }
 
   .version {
