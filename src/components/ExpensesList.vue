@@ -52,7 +52,7 @@ export default {
         datasets: [
           {
             label: 'Expenses',
-            backgroundColor: ['#00193d', '#415a77', '#778da9', '#e0e1dd', '#ee4370', '#e4fde1'],
+            backgroundColor: [],
             data: [],
           },
         ],
@@ -121,15 +121,17 @@ export default {
     groupedExpenses() {
       const labels = [];
       const data = [];
+      const backgroundColor = [];
       Object.entries(this.groupedExpenses).forEach(([category, amount]) => {
         labels.push(category);
+        backgroundColor.push(this.getCategoryColor(category));
         data.push(Number(amount).toFixed(2));
       });
       this.chartData = Object.assign({});
       this.$set(this.chartData, 'labels', labels);
       this.$set(this.chartData, 'datasets', []);
       this.chartData.datasets.push({
-        backgroundColor: ['#00193D', '#415a77', '#778da9', '#e0e1dd', '#EE4370', '#e4fde1'],
+        backgroundColor,
         data,
       });
     },
