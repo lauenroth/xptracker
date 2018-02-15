@@ -80,6 +80,7 @@ export default {
     },
     groupedExpenses() {
       const groupedExpenses = {};
+      const categories = this.getCategories();
       this.expenses.forEach((expense) => {
         if (!groupedExpenses[expense.category]) {
           groupedExpenses[expense.category] = parseFloat(expense.amount);
@@ -88,7 +89,16 @@ export default {
             + parseFloat(expense.amount));
         }
       });
-      return groupedExpenses;
+      const groupedAndSorted = [];
+      categories.forEach((category) => {
+        if (groupedExpenses[category.name] > 0) {
+          groupedAndSorted.push({
+            amount: groupedExpenses[category.name],
+            category,
+          });
+        }
+      });
+      return groupedAndSorted;
     },
   },
   methods: {
@@ -122,10 +132,10 @@ export default {
       const labels = [];
       const data = [];
       const backgroundColor = [];
-      Object.entries(this.groupedExpenses).forEach(([category, amount]) => {
-        labels.push(category);
-        backgroundColor.push(this.getCategoryColor(category));
-        data.push(Number(amount).toFixed(2));
+      this.groupedExpenses.forEach((total) => {
+        labels.push(total.category.name);
+        backgroundColor.push(total.category.color);
+        data.push(Number(total.amount).toFixed(2));
       });
       this.chartData = Object.assign({});
       this.$set(this.chartData, 'labels', labels);
