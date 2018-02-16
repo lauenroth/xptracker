@@ -20,7 +20,10 @@
     <p v-else class="no-data">no data yet</p>
     <section class="modal confirm" v-bind:class="{ show: showDeleteModal }">
       <p>Do you really want to delete this item?</p>
-      <p v-if="currentItem">{{ currentItem.description }}<br>({{ formatCurrency(currentItem.amount) }} €)</p>
+      <p v-if="currentItem">
+        {{ currentItem.description }}: {{ formatCurrency(currentItem.amount) }} €<br>
+        <span class="date">{{ currentItem.formattedDate }}</span>
+      </p>
       <div class="buttons">
         <div class="button cancel" @click="hideDeleteModal">Cancel</div>
         <div class="button delete" @click="deleteItemConfirmed">Delete</div>
@@ -30,6 +33,7 @@
 </template>
 
 <script>
+import moment from 'moment';
 import ExpensesChart from './ExpensesChart';
 import CategoriesMixin from '../mixins/categories';
 import ExpenseListItem from './ListItem';
@@ -113,6 +117,8 @@ export default {
     },
     deleteItem(item) {
       this.showDeleteModal = true;
+      item.description = item.description || item.category;
+      item.formattedDate = moment(item.date, 'YYYY-MM-DD').format('DD.MM.YYYY');
       this.currentItem = item;
     },
     hideDeleteModal() {
@@ -267,5 +273,9 @@ export default {
 }
 .modal .delete {
   background-color: #EE4370;
+}
+
+.date {
+  font-size: .8em;
 }
 </style>
