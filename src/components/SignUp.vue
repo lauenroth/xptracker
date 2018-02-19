@@ -8,7 +8,7 @@
       <input type="email" v-model="email" id="email" required autocomplete="email">
 
       <label for="password">Password</label>
-      <input type="password" v-model="password" id="password" placeholder="at least 6 characters" required autocomplete="new-password">
+      <input type="password" v-model="password" id="password" placeholder="at least 6 characters" minlength="6" required autocomplete="new-password">
       <p>Already have an account?<br><router-link to="/login">Go back to login</router-link></p>
       <button type="submit">Sign up</button>
     </div>
