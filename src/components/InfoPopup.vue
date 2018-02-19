@@ -1,11 +1,11 @@
 <template>
-  <div class="info-popup" v-bind:class="{ show: showPopup }">{{ message }}</div>
+  <div class="info-popup" v-bind:class="{ show: showPopup, error: isError }">{{ message }}</div>
 </template>
 
 <script>
 export default {
   name: 'InfoPopup',
-  props: ['message'],
+  props: ['message', 'isError'],
   data() {
     return {
       showPopup: false,
@@ -38,5 +38,8 @@ export default {
  }
  .info-popup.show {
    top: 0;
+ }
+ .info-popup.error {
+   background-color: crimson;
  }
 </style>

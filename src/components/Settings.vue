@@ -42,8 +42,7 @@
         </div>
       </div>
     </form>
-    <div class="error-popup" v-bind:class="{ show: showError }">{{currentError}}</div>
-    <InfoPopup :message="infoMessage"></InfoPopup>
+    <InfoPopup :message="infoMessage" :isError="showError"></InfoPopup>
   </section>
 </template>
 
@@ -91,7 +90,6 @@ export default {
       newPassword: '',
       newEmail: '',
       showError: false,
-      showInfo: true,
       showChangePassword: false,
       showConfirmPassword: false,
     };
@@ -132,18 +130,12 @@ export default {
           this.showConfirmPassword = false;
           this.currentPassword = '';
         }).catch((error) => {
-          this.currentError = error.message;
           this.showError = true;
-          setTimeout(() => {
-            this.showError = false;
-          }, 3500);
+          this.infoMessage = error.message;
         });
       }).catch((error) => {
-        this.currentError = error.message;
         this.showError = true;
-        setTimeout(() => {
-          this.showError = false;
-        }, 3500);
+        this.infoMessage = error.message;
       });
     },
     saveCurrency(currency) {
@@ -173,18 +165,12 @@ export default {
           this.newPassword = '';
           this.infoMessage = 'Password has been updated';
         }).catch((error) => {
-          this.currentError = error.message;
           this.showError = true;
-          setTimeout(() => {
-            this.showError = false;
-          }, 3500);
+          this.infoMessage = error.message;
         });
       }).catch((error) => {
-        this.currentError = error.message;
         this.showError = true;
-        setTimeout(() => {
-          this.showError = false;
-        }, 3500);
+        this.infoMessage = error.message;
       });
     },
   },
