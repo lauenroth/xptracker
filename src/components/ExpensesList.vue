@@ -21,7 +21,7 @@
     <section class="modal confirm" v-bind:class="{ show: showDeleteModal }">
       <p>Do you really want to delete this item?</p>
       <p v-if="currentItem">
-        {{ currentItem.description }}: {{ formatCurrency(currentItem.amount) }} €<br>
+        {{ currentItem.description }}: {{ formatCurrency(currentItem.amount) }} {{currency}}<br>
         <span class="date">{{ currentItem.formattedDate }}</span>
       </p>
       <div class="buttons">
@@ -48,6 +48,7 @@ export default {
   mixins: [CategoriesMixin],
   data() {
     return {
+      currency: '',
       currentItem: null,
       showDeleteModal: false,
       showOptions: '',
@@ -80,7 +81,7 @@ export default {
       this.expenses.forEach((expense) => {
         total -= parseFloat(expense.amount);
       });
-      return `${total.toFixed(2)} €`;
+      return `${total.toFixed(2)} ${this.currency}`;
     },
     groupedExpenses() {
       const groupedExpenses = {};
@@ -117,9 +118,9 @@ export default {
     },
     deleteItem(item) {
       this.showDeleteModal = true;
-      item.description = item.description || item.category;
-      item.formattedDate = moment(item.date, 'YYYY-MM-DD').format('DD.MM.YYYY');
       this.currentItem = item;
+      this.currentItem.description = this.currentItem.description || this.currentItem.category;
+      this.currentItem.formattedDate = moment(item.date, 'YYYY-MM-DD').format('DD.MM.YYYY');
     },
     hideDeleteModal() {
       this.showDeleteModal = false;
@@ -132,6 +133,9 @@ export default {
     formatCurrency(amount) {
       return Number(amount).toFixed(2);
     },
+  },
+  mounted() {
+    this.currency = window.localStorage.getItem('currency') || '€';
   },
   watch: {
     groupedExpenses() {

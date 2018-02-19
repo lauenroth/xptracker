@@ -6,7 +6,7 @@
       </div>
       <div class="edit" @click="editItem()"><i class="icon-edit"></i></div>
       <div class="delete" @click="deleteItem()"><i class="icon-delete"></i></div>
-      <div class="amount">-{{ formatCurrency(expense.amount) }} €</div>
+      <div class="amount">-{{ formatCurrency(expense.amount) }} {{currency}}</div>
       <div class="description" v-if="expense.description">{{ expense.description }}</div>
       <div class="description" v-else>{{ expense.category }}</div>
       <div class="date">{{ expense.date.split('-').reverse().join('.') }}</div>
@@ -26,6 +26,11 @@ export default {
       return this.showOptions === this.expense.id ? 'show-options' : '';
     },
   },
+  data() {
+    return {
+      currency: '',
+    };
+  },
   methods: {
     formatCurrency(amount) {
       return Number(amount).toFixed(2);
@@ -43,6 +48,9 @@ export default {
     deleteItem() {
       this.$emit('deleteItem', this.expense);
     },
+  },
+  mounted() {
+    this.currency = window.localStorage.getItem('currency') || '€';
   },
 };
 </script>
