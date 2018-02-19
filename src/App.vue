@@ -130,6 +130,7 @@ button,
   color: #fff;
   font-size: 22px;
   line-height: 50px;
+  height: 50px;
   text-align: center;
   width: 100%;
 }
