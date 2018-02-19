@@ -59,14 +59,14 @@ form {
    min-height: calc(100vh - 50px);
  }
  label {
-   margin: 0 20px;
+   margin: 0 10px;
    text-align: left;
  }
  label:first-child {
-   margin-top: 20px;
+   margin-top: 10px;
  }
  input {
-   padding: 10px 20px;
+   padding: 0 10px;
  }
  p {
    line-height: 2em;
@@ -80,20 +80,5 @@ form {
  button {
    cursor: pointer;
    margin-top: auto;
- }
- .error-popup {
-   background-color: crimson;
-   color: #fff;
-   left: 0;
-   line-height: 30px;
-   padding: 10px;
-   position: fixed;
-   right: 0;
-   top: -100px;
-   transition: .3s top;
-   z-index: 30;
- }
- .error-popup.show {
-   top: 0;
  }
 </style>

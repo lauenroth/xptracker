@@ -198,4 +198,20 @@ header.main h3 {
   margin: 0 50px;
   user-select: none;
 }
+
+.error-popup {
+   background-color: crimson;
+   color: #fff;
+   left: 0;
+   line-height: 30px;
+   padding: 10px;
+   position: fixed;
+   right: 0;
+   top: -150px;
+   transition: .3s top;
+   z-index: 30;
+ }
+ .error-popup.show {
+   top: 0;
+ }
 </style>
