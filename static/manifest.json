@@ -1,6 +1,6 @@
 {
   "name": "Expenses Tracker",
-  "short_name": "Expenses Tracker",
+  "short_name": "Expenses",
   "start_url": "/index.html",
   "display": "standalone",
   "orientation": "portrait",
