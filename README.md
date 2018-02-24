@@ -1,6 +1,7 @@
-# expenses-tracker
+# Expenses tracker
 
-> Expenses Tracker
+> Keep track of your expenses with this app. Quickly add new expenses to categories like food/drinks, shopping, public transportation, healthcare,... Check out the statistics to see where your money went.
+> Optimized for smartphones.
 
 ## Build Setup
 
@@ -17,5 +18,3 @@ npm run build
 # build for production and view the bundle analyzer report
 npm run build --report
 ```
-
-For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
