@@ -33,7 +33,7 @@ body {
   font-family: 'Lato', Helvetica, Arial, sans-serif;
   overflow-x: hidden;
   overflow-y: auto;
-  position: absolute;
+  /* position: absolute; */
   right: 0;
   text-align: center;
   top: 0;

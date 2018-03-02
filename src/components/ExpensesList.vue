@@ -34,6 +34,7 @@
 
 <script>
 import moment from 'moment';
+import Rellax from 'rellax';
 import ExpensesChart from './ExpensesChart';
 import CategoriesMixin from '../mixins/categories';
 import ExpenseListItem from './ListItem';
@@ -136,6 +137,12 @@ export default {
   },
   mounted() {
     this.currency = window.localStorage.getItem('currency') || '€';
+
+    const parallax = new Rellax('.summary', { // eslint-disable-line
+      speed: -4,
+      center: false,
+      round: true,
+    });
   },
   watch: {
     groupedExpenses() {
@@ -207,6 +214,7 @@ export default {
   border: 1px solid #e6eaef;
   border-bottom: none;
   margin: 0;
+  min-height: 100vh;
   padding: 0;
   position: relative;
 }
