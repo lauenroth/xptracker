@@ -129,7 +129,7 @@ export default {
 form {
   bottom: -300px;
   font-size: 28px;
-  height: 259px;
+  height: 255px;
   left: 0;
   overflow: hidden;
   position: fixed;
